@@ -1,0 +1,28 @@
+<div class="container">
+
+    <h1 class="mt-3">{{title()}}</h1>
+    
+    @if(isLoading() || isSaving()){
+        <mat-spinner></mat-spinner>
+    }
+    
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="m-4">
+        <div class="mt-2">
+            <div class="mt-3">
+                <label class="form-label fw-semibold">Category Name</label>
+                <input type="text" id="name" class="form-control" formControlName="name" placeholder="Enter Categroy Name" required>
+            </div>
+            <div class="mt-3">
+                <label class="form-label fw-semibold">Category Url Handle</label>
+                <input type="text" id="urlHandle" class="form-control" formControlName="urlHandle" placeholder="Enter Url Handle" required>
+            </div>
+
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary me-2">Save</button>
+                @if(categoryId){
+                    <button class="btn btn-danger" (click)="deleteItem()">Delete</button>
+                }
+            </div>
+        </div>
+    </form>
+</div>

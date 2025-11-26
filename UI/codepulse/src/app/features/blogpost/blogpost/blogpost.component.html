@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="my-5">
+        @if(isLoading$ | async){
+        <mat-spinner></mat-spinner>
+        }
+        @else {
+        @if(blogpost()){
+        <div class="col-12 col-md-8 col-lg-6 mx-auto">
+            <img class="img-fluid" [src]="blogpost()?.featuredImageUrl" [title]="blogpost()?.title" />
+
+            <h2 class="mt-4">{{blogpost()?.title}}</h2>
+
+            <div class="d-flex justify-content-between mt-4">
+                <span>{{blogpost()?.author}}</span>
+                <span>{{blogpost()?.publishedDate | date}}</span>
+            </div>
+
+            @if(blogpost()?.categories){
+            <div class="mt-4">
+                @for(cat of blogpost()?.categories; track cat.id){
+                <span class="badge bg-secondary me-2">{{cat.name}}</span>
+                }
+            </div>
+            }
+
+            <div class="mt-4 blog-content">
+                <markdown [data]="blogpost()?.content"></markdown>
+            </div>
+        </div>
+        }
+        @else {
+        <div class="m4">
+            No data found, please reload or contact the Admin.
+        </div>
+        }
+        }
+    </div>
+</div>

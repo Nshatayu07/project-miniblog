@@ -1,0 +1,51 @@
+<div class="container">
+
+    <h1 class="mt-3">Blog Post List</h1>
+
+    <div class="d-flex justify-content-end mt-3">
+        <a class="btn btn-primary" [routerLink]="['add']">
+            Add Blog Post
+        </a>
+    </div>
+    
+    @if(isLoading$ | async){
+        <mat-spinner></mat-spinner>
+    }
+
+    <ng-container *ngIf="blogposts$ | async as blogposts; else noData">
+        <table class="table table-striped mt-4" *ngIf="blogposts.length > 0; else noData">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Title.</th>
+                    <th>Short Description</th>
+                    <th>Author</th>
+                    <th>Published</th>
+                    <th>Categories</th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let b of blogposts; index as i">
+                    <td>{{i+1}}</td>
+                    <td>{{b?.title}}</td>
+                    <td>{{b?.shortDescription}}</td>
+                    <td>{{b?.author}}</td>
+                    <td>{{b?.publishedDate | date}}</td>
+                    <td>
+                        @for(cat of b?.categories; track cat.id){
+                            <span class="badge text-bg-secondary">{{cat.name}}</span>
+                        }
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" [routerLink]="['edit', b.id]">Edit</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </ng-container>
+    <ng-template #noData>
+        <p class="text-muted">No Blog Post found.</p>
+    </ng-template>
+</div>
